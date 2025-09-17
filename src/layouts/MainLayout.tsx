@@ -15,6 +15,7 @@ export default function MainLayout({ children }: MainLayoutProps): JSX.Element {
         <Header.Title className="font-extrabold">#VANLIFE</Header.Title>
         <Header.Nav>
           <Navbar>
+            <Navbar.Item to="/host">Host</Navbar.Item>
             <Navbar.Item to="/about">About</Navbar.Item>
             <Navbar.Item to="/vans">Vans</Navbar.Item>
           </Navbar>
