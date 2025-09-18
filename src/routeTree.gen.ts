@@ -18,11 +18,14 @@ import { Route as HostIndexRouteImport } from './routes/host/index'
 import { Route as HostReviewsRouteImport } from './routes/host/reviews'
 import { Route as HostIncomeRouteImport } from './routes/host/income'
 import { Route as HostVansIndexRouteImport } from './routes/host/vans/index'
+import { Route as HostVansIdRouteRouteImport } from './routes/host/vans/$id/route'
+import { Route as HostVansIdIndexRouteImport } from './routes/host/vans/$id/index'
+import { Route as HostVansIdPricingRouteImport } from './routes/host/vans/$id/pricing'
+import { Route as HostVansIdPhotosRouteImport } from './routes/host/vans/$id/photos'
 
 const VansIndexLazyRouteImport = createFileRoute('/vans/')()
 const VansTypeLazyRouteImport = createFileRoute('/vans/$type')()
 const VansIdLazyRouteImport = createFileRoute('/vans/$id')()
-const HostVansIdLazyRouteImport = createFileRoute('/host/vans/$id')()
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -74,11 +77,26 @@ const HostVansIndexRoute = HostVansIndexRouteImport.update({
   path: '/vans/',
   getParentRoute: () => HostRouteRoute,
 } as any)
-const HostVansIdLazyRoute = HostVansIdLazyRouteImport.update({
+const HostVansIdRouteRoute = HostVansIdRouteRouteImport.update({
   id: '/vans/$id',
   path: '/vans/$id',
   getParentRoute: () => HostRouteRoute,
-} as any).lazy(() => import('./routes/host/vans/$id.lazy').then((d) => d.Route))
+} as any)
+const HostVansIdIndexRoute = HostVansIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => HostVansIdRouteRoute,
+} as any)
+const HostVansIdPricingRoute = HostVansIdPricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => HostVansIdRouteRoute,
+} as any)
+const HostVansIdPhotosRoute = HostVansIdPhotosRouteImport.update({
+  id: '/photos',
+  path: '/photos',
+  getParentRoute: () => HostVansIdRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -90,8 +108,11 @@ export interface FileRoutesByFullPath {
   '/vans/$type': typeof VansTypeLazyRoute
   '/host/': typeof HostIndexRoute
   '/vans': typeof VansIndexLazyRoute
-  '/host/vans/$id': typeof HostVansIdLazyRoute
+  '/host/vans/$id': typeof HostVansIdRouteRouteWithChildren
   '/host/vans': typeof HostVansIndexRoute
+  '/host/vans/$id/photos': typeof HostVansIdPhotosRoute
+  '/host/vans/$id/pricing': typeof HostVansIdPricingRoute
+  '/host/vans/$id/': typeof HostVansIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,8 +123,10 @@ export interface FileRoutesByTo {
   '/vans/$type': typeof VansTypeLazyRoute
   '/host': typeof HostIndexRoute
   '/vans': typeof VansIndexLazyRoute
-  '/host/vans/$id': typeof HostVansIdLazyRoute
   '/host/vans': typeof HostVansIndexRoute
+  '/host/vans/$id/photos': typeof HostVansIdPhotosRoute
+  '/host/vans/$id/pricing': typeof HostVansIdPricingRoute
+  '/host/vans/$id': typeof HostVansIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,8 +139,11 @@ export interface FileRoutesById {
   '/vans/$type': typeof VansTypeLazyRoute
   '/host/': typeof HostIndexRoute
   '/vans/': typeof VansIndexLazyRoute
-  '/host/vans/$id': typeof HostVansIdLazyRoute
+  '/host/vans/$id': typeof HostVansIdRouteRouteWithChildren
   '/host/vans/': typeof HostVansIndexRoute
+  '/host/vans/$id/photos': typeof HostVansIdPhotosRoute
+  '/host/vans/$id/pricing': typeof HostVansIdPricingRoute
+  '/host/vans/$id/': typeof HostVansIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -133,6 +159,9 @@ export interface FileRouteTypes {
     | '/vans'
     | '/host/vans/$id'
     | '/host/vans'
+    | '/host/vans/$id/photos'
+    | '/host/vans/$id/pricing'
+    | '/host/vans/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -143,8 +172,10 @@ export interface FileRouteTypes {
     | '/vans/$type'
     | '/host'
     | '/vans'
-    | '/host/vans/$id'
     | '/host/vans'
+    | '/host/vans/$id/photos'
+    | '/host/vans/$id/pricing'
+    | '/host/vans/$id'
   id:
     | '__root__'
     | '/'
@@ -158,6 +189,9 @@ export interface FileRouteTypes {
     | '/vans/'
     | '/host/vans/$id'
     | '/host/vans/'
+    | '/host/vans/$id/photos'
+    | '/host/vans/$id/pricing'
+    | '/host/vans/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -245,17 +279,54 @@ declare module '@tanstack/react-router' {
       id: '/host/vans/$id'
       path: '/vans/$id'
       fullPath: '/host/vans/$id'
-      preLoaderRoute: typeof HostVansIdLazyRouteImport
+      preLoaderRoute: typeof HostVansIdRouteRouteImport
       parentRoute: typeof HostRouteRoute
+    }
+    '/host/vans/$id/': {
+      id: '/host/vans/$id/'
+      path: '/'
+      fullPath: '/host/vans/$id/'
+      preLoaderRoute: typeof HostVansIdIndexRouteImport
+      parentRoute: typeof HostVansIdRouteRoute
+    }
+    '/host/vans/$id/pricing': {
+      id: '/host/vans/$id/pricing'
+      path: '/pricing'
+      fullPath: '/host/vans/$id/pricing'
+      preLoaderRoute: typeof HostVansIdPricingRouteImport
+      parentRoute: typeof HostVansIdRouteRoute
+    }
+    '/host/vans/$id/photos': {
+      id: '/host/vans/$id/photos'
+      path: '/photos'
+      fullPath: '/host/vans/$id/photos'
+      preLoaderRoute: typeof HostVansIdPhotosRouteImport
+      parentRoute: typeof HostVansIdRouteRoute
     }
   }
 }
+
+interface HostVansIdRouteRouteChildren {
+  HostVansIdPhotosRoute: typeof HostVansIdPhotosRoute
+  HostVansIdPricingRoute: typeof HostVansIdPricingRoute
+  HostVansIdIndexRoute: typeof HostVansIdIndexRoute
+}
+
+const HostVansIdRouteRouteChildren: HostVansIdRouteRouteChildren = {
+  HostVansIdPhotosRoute: HostVansIdPhotosRoute,
+  HostVansIdPricingRoute: HostVansIdPricingRoute,
+  HostVansIdIndexRoute: HostVansIdIndexRoute,
+}
+
+const HostVansIdRouteRouteWithChildren = HostVansIdRouteRoute._addFileChildren(
+  HostVansIdRouteRouteChildren,
+)
 
 interface HostRouteRouteChildren {
   HostIncomeRoute: typeof HostIncomeRoute
   HostReviewsRoute: typeof HostReviewsRoute
   HostIndexRoute: typeof HostIndexRoute
-  HostVansIdLazyRoute: typeof HostVansIdLazyRoute
+  HostVansIdRouteRoute: typeof HostVansIdRouteRouteWithChildren
   HostVansIndexRoute: typeof HostVansIndexRoute
 }
 
@@ -263,7 +334,7 @@ const HostRouteRouteChildren: HostRouteRouteChildren = {
   HostIncomeRoute: HostIncomeRoute,
   HostReviewsRoute: HostReviewsRoute,
   HostIndexRoute: HostIndexRoute,
-  HostVansIdLazyRoute: HostVansIdLazyRoute,
+  HostVansIdRouteRoute: HostVansIdRouteRouteWithChildren,
   HostVansIndexRoute: HostVansIndexRoute,
 }
 
