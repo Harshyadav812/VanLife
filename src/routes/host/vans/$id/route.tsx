@@ -5,7 +5,7 @@ import {
   useParams,
   useLoaderData,
 } from "@tanstack/react-router";
-import type { Van } from "../../../vans/index.lazy";
+import type { Van } from "../../../vans";
 import Button from "../../../../components/ui/Button";
 
 // layout route

@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { HostNav } from "./-components/HostNav";
-import type { Van } from "../vans/index.lazy";
+import type { Van } from "../vans";
 
 export const Route = createFileRoute("/host")({
   loader: async () => {
