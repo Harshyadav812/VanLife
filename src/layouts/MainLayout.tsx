@@ -32,7 +32,9 @@ export default function MainLayout({ children }: MainLayoutProps): JSX.Element {
           <Footer.Nav>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
-            <Link to="/vans">Vans</Link>
+            <Link to="/vans" search={{ type: undefined }}>
+              Vans
+            </Link>
           </Footer.Nav>
           <Footer.Legal />
         </div>
