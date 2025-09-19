@@ -1,6 +1,6 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 // import { useEffect, useState } from "react";
-import type { Van } from "../../vans/index.lazy";
+import type { Van } from "../../vans";
 import { Link } from "@tanstack/react-router";
 import Card from "../../../components/ui/Card";
 import "../../../server";
