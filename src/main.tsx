@@ -15,9 +15,9 @@ const router = createRouter({
         <p className="font-bold text-4xl mb-4">
           Sorry, the page you were looking for was not found.
         </p>
-        <Link to="/">
+        <Link to="..">
           <Button variant="simple" size="lg" className="!w-full sm:!w-80">
-            Return to Home
+            Go Back
           </Button>
         </Link>
       </div>
