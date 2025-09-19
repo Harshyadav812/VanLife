@@ -1,12 +1,8 @@
 import Button from "../../components/ui/Button";
 import Card from "../../components/ui/Card";
-import {
-  Link,
-  useLoaderData,
-  createFileRoute,
-  notFound,
-} from "@tanstack/react-router";
+import { Link, useLoaderData, createFileRoute } from "@tanstack/react-router";
 import "../../server";
+import { getVans } from "../../api";
 
 export interface Van {
   id: string;
@@ -39,19 +35,8 @@ export const Route = createFileRoute("/vans/")({
   },
 
   loader: async () => {
-    const res = await fetch("/api/vans");
-
-    if (!res.ok) {
-      throw new Error("Van not found");
-    }
-
-    const data = await res.json();
-
-    if (!data?.vans?.length) {
-      throw notFound();
-    }
-
-    return data.vans;
+    const vans = await getVans();
+    return vans;
   },
   staleTime: 10 * 60 * 1000,
   component: VansPage,
@@ -87,9 +72,9 @@ function NotFoundComponent() {
       <p className="font-bold text-4xl mb-4">
         Sorry, the page you were looking for was not found.
       </p>
-      <Link to="/">
+      <Link to="..">
         <Button variant="luxury" size="lg" className="!w-full sm:!w-80">
-          Return to Home
+          Go Back
         </Button>
       </Link>
     </div>

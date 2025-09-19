@@ -1,8 +1,8 @@
 import {
   useLoaderData,
   createFileRoute,
-  notFound,
   retainSearchParams,
+  notFound,
 } from "@tanstack/react-router";
 import Button from "../../components/ui/Button";
 import { Link } from "@tanstack/react-router";
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/vans/$id")({
 
     const data = await res.json();
 
-    if (!data) throw notFound({ data: params.id });
+    if (!data?.vans) throw notFound({ data: params.id });
 
     return data.vans;
   },
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/vans/$id")({
   },
   component: VanDetail,
   errorComponent: ErrorComponent,
-  notFoundComponent: NotFoundComponent,
+  notFoundComponent: NotFoundPage,
 });
 
 function ErrorComponent() {
@@ -67,7 +67,7 @@ function ErrorComponent() {
   );
 }
 
-function NotFoundComponent() {
+function NotFoundPage() {
   const { id } = Route.useParams();
   return (
     <div className="w-full flex flex-col justify-center items-center font-extrabold text-2xl px-5 py-5">
