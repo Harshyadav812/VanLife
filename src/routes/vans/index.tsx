@@ -17,9 +17,9 @@ export interface Van {
   type: string;
 }
 
-type VanTypeOptions = "luxury" | "rugged" | "simple";
+export type VanTypeOptions = "luxury" | "rugged" | "simple";
 
-type VanSearch = {
+export type VanSearch = {
   type: VanTypeOptions | undefined;
 };
 
@@ -201,7 +201,12 @@ function VansPage() {
               key={van.id}
               className="hover:shadow-xl transition-shadow duration-300 w-full min-w-[250px] max-w-[320px]"
             >
-              <Link to="/vans/$id" params={{ id: van.id }} preload="intent">
+              <Link
+                to="/vans/$id"
+                params={{ id: van.id }}
+                search={{ type }}
+                preload="intent"
+              >
                 <Card.Image src={van.imageUrl} alt={van.name} />
                 <Card.Content>
                   <div className="flex justify-between items-center mb-2">

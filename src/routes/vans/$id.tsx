@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router";
 import Button from "../../components/ui/Button";
 import { Link } from "@tanstack/react-router";
+import type { VanSearch, VanTypeOptions } from ".";
 
 export const Route = createFileRoute("/vans/$id")({
   loader: async ({ params }) => {
@@ -20,6 +21,21 @@ export const Route = createFileRoute("/vans/$id")({
 
     return data.vans;
   },
+
+  validateSearch: (search: Record<string, unknown>): VanSearch => {
+    const validTypes: VanTypeOptions[] = ["luxury", "rugged", "simple"];
+    if (search.type) {
+      const type = search.type as string;
+      if (!validTypes.includes(type as VanTypeOptions)) {
+        throw new Error(`Invalid van type: ${type}`);
+      }
+      return { type: type as VanTypeOptions };
+    }
+    return {
+      type: undefined,
+    };
+  },
+
   search: {
     middlewares: [retainSearchParams(["type"])],
   },
@@ -86,7 +102,7 @@ function VanDetail() {
         {/* Back button */}
         <Link to=".." search={type}>
           <button className="mb-6 text-gray-600 hover:text-gray-900 flex items-center gap-2 cursor-pointer">
-            ← Back to vans
+            ← Back to {type.type || "all"} vans
           </button>
         </Link>
 
