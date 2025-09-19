@@ -4,9 +4,9 @@ import { Route as hostRoute } from "../route";
 export function HostNav() {
   const links = [
     { to: ".", label: "Dashboard", activeOptions: { exact: true } },
-    { to: "income", label: "Income" },
+    { to: "income", label: "Income", activeOptions: { exact: true } },
     { to: "vans", label: "Vans", activeOptions: { exact: true } },
-    { to: "reviews", label: "Reviews" },
+    { to: "reviews", label: "Reviews", activeOptions: { exact: true } },
   ];
 
   return (
