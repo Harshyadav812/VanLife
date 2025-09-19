@@ -34,6 +34,7 @@ function Image({
       className={clsx("w-full h-48 sm:h-56 md:h-64 object-cover", className)}
       src={src}
       alt={alt}
+      loading="lazy"
     />
   );
 }

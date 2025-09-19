@@ -3,9 +3,8 @@ import clsx from "clsx";
 
 const variantClasses = {
   luxury: "bg-neutral-900",
-  simple: "bg-orange-600",
+  simple: "bg-orange-500",
   rugged: "bg-teal-800",
-  // success: 'bg-green-600 hover:bg-green-700'
 } as const;
 
 interface ButtonProps {
