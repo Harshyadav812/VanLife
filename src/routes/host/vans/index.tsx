@@ -3,11 +3,52 @@ import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import type { Van } from "../../vans";
 import { Link } from "@tanstack/react-router";
 import Card from "../../../components/ui/Card";
+import Button from "../../../components/ui/Button";
 import "../../../server";
 
 export const Route = createFileRoute("/host/vans/")({
   component: HostVanPage,
+  errorComponent: ErrorComponent,
+  notFoundComponent: NotFoundComponent,
 });
+
+function ErrorComponent() {
+  return (
+    <div className="w-full flex flex-col justify-center items-center font-extrabold text-2xl px-5 py-5">
+      <p className="font-bold text-4xl mb-4">Van Not Found</p>
+      <p className="text-lg text-gray-600 mb-6">
+        The van you're looking for doesn't exist or has been removed.
+      </p>
+      <div className="flex gap-4">
+        <Link to="..">
+          <Button variant="simple" size="lg">
+            Go Back
+          </Button>
+        </Link>
+        <Link to="/">
+          <Button variant="luxury" size="lg">
+            Return to Home
+          </Button>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function NotFoundComponent() {
+  return (
+    <div className="w-full flex flex-col justify-center items-center font-extrabold text-2xl px-5 py-5">
+      <p className="font-bold text-4xl mb-4">
+        The Van you're looking for doesn't exist or has been removed.
+      </p>
+      <Link to="..">
+        <Button variant="simple" size="lg">
+          Return to Vans
+        </Button>
+      </Link>
+    </div>
+  );
+}
 
 function HostVanPage() {
   const { hostVans } = useLoaderData({ from: "/host" });
