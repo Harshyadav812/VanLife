@@ -4,6 +4,7 @@ import {
   Outlet,
   useParams,
   useLoaderData,
+  notFound,
 } from "@tanstack/react-router";
 import type { Van } from "../../../vans";
 import Button from "../../../../components/ui/Button";
@@ -12,7 +13,14 @@ import Button from "../../../../components/ui/Button";
 export const Route = createFileRoute("/host/vans/$id")({
   loader: async ({ params }) => {
     const res = await fetch(`/api/host/vans/${params.id}`);
+
+    if (!res) throw new Error("Network Error");
+    if (!res.ok) throw notFound();
+
     const data = await res.json();
+
+    if (!data || !data.vans) throw notFound({ data: params.id });
+
     return {
       van: data.vans[0] as Van,
     };
@@ -104,7 +112,6 @@ function VanDetailLayout() {
             </Link>
           </nav>
 
-          {/* Content: Add min-height to reduce layout shift across tabs */}
           <div className="pt-2 sm:pt-3 min-h-[320px] sm:min-h-[360px] md:min-h-[400px]">
             <Outlet />
           </div>
