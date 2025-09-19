@@ -17,7 +17,7 @@ function Index() {
           Add adventure to your life by joining the #vanlife movement. Rent the
           perfect van to make your perfect road trip.
         </p>
-        <Link to="/vans" className="inline-block">
+        <Link to="/vans" search={{ type: undefined }} className="inline-block">
           <Button
             size="lg"
             variant="simple"

@@ -33,7 +33,7 @@ function About() {
         <div className="md:col-span-1 py-8 px-8 bg-[#FFCC8D] rounded-md text-left md:order-3">
           <p className="text-2xl font-bold">Your destination is waiting.</p>
           <p className="text-2xl font-bold">Your van is ready.</p>
-          <Link to="/vans">
+          <Link to="/vans" search={{ type: undefined }}>
             <Button size="md" variant="luxury">
               Explore our Vans
             </Button>
